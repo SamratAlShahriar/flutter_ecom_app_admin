@@ -19,7 +19,6 @@ class DateModel {
     required this.year,
   });
 
-  //TODO: with timestamp
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       dateFieldTimestamp: timestamp,
@@ -29,7 +28,6 @@ class DateModel {
     };
   }
 
-  //TODO: with timestamp
   factory DateModel.fromMap(Map<String, dynamic> map) {
     return DateModel(
         timestamp: map[dateFieldTimestamp],

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "86125828600",
+    "project_id": "ecomappflutter",
+    "storage_bucket": "ecomappflutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86125828600:android:b1ea93c4f26f0194701e0d",
+        "android_client_info": {
+          "package_name": "dev.sas.ecomadmin.flutter_ecom_app_admin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "86125828600-q06n84mh64qoae8ia1gfesj20u752s79.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAO06-ZhlRBbx8H_Q9SRSsjXIED0yyUo9U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "86125828600-q06n84mh64qoae8ia1gfesj20u752s79.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

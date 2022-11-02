@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_ecom_app_admin/firebase_options.dart';
 import 'package:flutter_ecom_app_admin/pages/add_product_page.dart';
 import 'package:flutter_ecom_app_admin/pages/category_page.dart';
 import 'package:flutter_ecom_app_admin/pages/dashboard_page.dart';
@@ -12,11 +14,17 @@ import 'package:flutter_ecom_app_admin/pages/report_page.dart';
 import 'package:flutter_ecom_app_admin/pages/settings_page.dart';
 import 'package:flutter_ecom_app_admin/pages/user_list_page.dart';
 import 'package:flutter_ecom_app_admin/pages/view_product_page.dart';
+import 'package:flutter_ecom_app_admin/providers/product_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(const MyApp());
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => ProductProvider(),
+    ),
+  ], child: const MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -41,6 +49,7 @@ class MyApp extends StatelessWidget {
         UserListPage.routeName: (_) => const UserListPage(),
         ViewProductPage.routeName: (_) => const ViewProductPage(),
       },
+      builder: EasyLoading.init(),
     );
   }
 }

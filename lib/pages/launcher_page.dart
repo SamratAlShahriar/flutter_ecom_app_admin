@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_ecom_app_admin/pages/dashboard_page.dart';
+import 'package:flutter_ecom_app_admin/pages/login_page.dart';
+
+import '../database/auth/auth_service.dart';
+
 class LauncherPage extends StatelessWidget {
   static const String routeName = '/';
+
   const LauncherPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    if (AuthService.currentUser != null) {
+      Navigator.pushNamed(context, DashboardPage.routeName);
+    } else {
+      Navigator.pushNamed(context, LoginPage.routeName);
+    }
+
+    return CircularProgressIndicator();
   }
 }
