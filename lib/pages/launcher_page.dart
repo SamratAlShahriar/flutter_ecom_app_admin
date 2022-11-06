@@ -11,12 +11,14 @@ class LauncherPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (AuthService.currentUser != null) {
-      Navigator.pushNamed(context, DashboardPage.routeName);
-    } else {
-      Navigator.pushNamed(context, LoginPage.routeName);
-    }
+    Future.delayed(Duration.zero, () {
+      if (AuthService.currentUser != null) {
+        Navigator.pushReplacementNamed(context, DashboardPage.routeName);
+      } else {
+        Navigator.pushReplacementNamed(context, LoginPage.routeName);
+      }
+    });
 
-    return CircularProgressIndicator();
+    return Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }

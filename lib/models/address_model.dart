@@ -1,8 +1,8 @@
-const String COLLECTION_ADDRESS_MODEL = 'Address';
-const String ADDRESS_FIELD_ADDRESS_LINE1 = 'address_line1';
-const String ADDRESS_FIELD_ADDRESS_LINE2 = 'address_line2';
-const String ADDRESS_FIELD_CITY = 'address_city';
-const String ADDRESS_FIELD_ZIP_CODE = 'address_zipcode';
+const String collectionAddressModel = 'Address';
+const String addressFieldAddressLine1 = 'address_line1';
+const String addressFieldAddressLine2 = 'address_line2';
+const String addressFieldCity = 'address_city';
+const String addressFieldZipCode = 'address_zipcode';
 
 class AddressModel {
   String addressLine1;
@@ -19,19 +19,19 @@ class AddressModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      ADDRESS_FIELD_ADDRESS_LINE1: addressLine1,
-      ADDRESS_FIELD_ADDRESS_LINE2: addressLine2,
-      ADDRESS_FIELD_CITY: city,
-      ADDRESS_FIELD_ZIP_CODE: zipCode,
+      addressFieldAddressLine1: addressLine1,
+      addressFieldAddressLine2: addressLine2,
+      addressFieldCity: city,
+      addressFieldZipCode: zipCode,
     };
   }
 
   factory AddressModel.fromMap(Map<String, dynamic> map) {
     return AddressModel(
-      addressLine1: map[ADDRESS_FIELD_ADDRESS_LINE1],
-      addressLine2: map[ADDRESS_FIELD_ADDRESS_LINE2],
-      city: map[ADDRESS_FIELD_ADDRESS_LINE2],
-      zipCode: map[ADDRESS_FIELD_ZIP_CODE],
+      addressLine1: map[addressFieldAddressLine1],
+      addressLine2: map[addressFieldAddressLine2],
+      city: map[addressFieldAddressLine2],
+      zipCode: map[addressFieldZipCode],
     );
   }
 }

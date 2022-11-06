@@ -1,3 +1,5 @@
+import 'package:flutter_ecom_app_admin/models/category_model.dart';
+
 const String collectionProduct = 'Products';
 const String productFieldId = 'product_id';
 const String productFieldName = 'product_name';
@@ -15,7 +17,7 @@ const String productFieldFeatured = 'product_featured';
 class ProductModel {
   String? productId;
   String productName;
-  String category;
+  CategoryModel category;
   String? shortDescription;
   String? longDescription;
   num salePrice;
@@ -44,7 +46,7 @@ class ProductModel {
     return <String, dynamic>{
       productFieldId: productId,
       productFieldName: productName,
-      productFieldCategory: category,
+      productFieldCategory: category.toMap(),
       productFieldShortDescription: shortDescription,
       productFieldLongDescription: longDescription,
       productFieldSalePrice: salePrice,
@@ -61,7 +63,7 @@ class ProductModel {
     return ProductModel(
       productId: map[productFieldId],
       productName: map[productFieldName],
-      category: map[productFieldCategory],
+      category: CategoryModel.fromMap(map[productFieldCategory]),
       shortDescription: map[productFieldShortDescription],
       longDescription: map[productFieldLongDescription],
       salePrice: map[productFieldSalePrice],

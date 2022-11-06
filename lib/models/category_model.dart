@@ -1,7 +1,7 @@
-const String COLLECTION_CATEGORY = 'Category';
-const String CATEGORY_FIELD_ID = 'category_id';
-const String CATEGORY_FIELD_NAME = 'category_name';
-const String CATEGORY_FIELD_PRODUCT_COUNT = 'category_product_count';
+const String collectionCategory = 'Category';
+const String collectionFieldId = 'category_id';
+const String collectionFieldName = 'category_name';
+const String collectionFieldProductCount = 'category_product_count';
 
 class CategoryModel {
   String? categoryId;
@@ -16,17 +16,17 @@ class CategoryModel {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      CATEGORY_FIELD_ID: categoryId,
-      CATEGORY_FIELD_NAME: categoryName,
-      CATEGORY_FIELD_PRODUCT_COUNT: CATEGORY_FIELD_PRODUCT_COUNT,
+      collectionFieldId: categoryId,
+      collectionFieldName: categoryName,
+      collectionFieldProductCount: productCount,
     };
   }
 
   factory CategoryModel.fromMap(Map<String, dynamic> map) {
     return CategoryModel(
-      categoryId: map[CATEGORY_FIELD_ID],
-      categoryName: map[CATEGORY_FIELD_NAME],
-      productCount: map[CATEGORY_FIELD_PRODUCT_COUNT],
+      categoryId: map[collectionFieldId],
+      categoryName: map[collectionFieldName],
+      productCount: map[collectionFieldProductCount],
     );
   }
 }
