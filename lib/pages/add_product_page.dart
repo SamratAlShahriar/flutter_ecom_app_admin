@@ -4,6 +4,8 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_ecom_app_admin/models/category_model.dart';
 
+import '../utils/helper_functions.dart';
+
 class AddProductPage extends StatefulWidget {
   static const String routeName = '/add_product_page';
 
@@ -32,6 +34,13 @@ class _AddProductPageState extends State<AddProductPage> {
   @override
   void initState() {
     // TODO: implement initState
+
+    isConnectedToInternet().then((value) {
+      setState(() {
+        _isConnected = value;
+      });
+    });
+
     _subscription = Connectivity().onConnectivityChanged.listen((result) {
       setState(() {
         _isConnected = result == ConnectivityResult.wifi ||
