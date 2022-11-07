@@ -74,6 +74,12 @@ class _AddProductPageState extends State<AddProductPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Product'),
+        actions: [
+          IconButton(
+            onPressed: _saveProduct,
+            icon: const Icon(Icons.save),
+          ),
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -370,23 +376,44 @@ class _AddProductPageState extends State<AddProductPage> {
         );
 
         final purchaseModel = PurchaseModel(
-            purchaseQuantity: num.parse(_quantityController.text),
-            purchasePrice: num.parse(_purchasePriceController.text),
-            dateModel: DateModel(
-              timestamp: Timestamp.fromDate(purchaseDate!),
-              day: purchaseDate!.day,
-              month: purchaseDate!.month,
-              year: purchaseDate!.year,
-            ),);
+          purchaseQuantity: num.parse(_quantityController.text),
+          purchasePrice: num.parse(_purchasePriceController.text),
+          dateModel: DateModel(
+            timestamp: Timestamp.fromDate(purchaseDate!),
+            day: purchaseDate!.day,
+            month: purchaseDate!.month,
+            year: purchaseDate!.year,
+          ),
+        );
 
-        await _productProvider.addNewProduct(productModel,purchaseModel);
+        await _productProvider.addNewProduct(productModel, purchaseModel);
         EasyLoading.dismiss();
 
+        if (mounted) {
+          showMsg(context, 'Product Saved!');
+        }
+
+        _resetField();
       } catch (error) {
         showMsg(context, 'Something went wrong');
         EasyLoading.dismiss();
         print(error.toString());
       }
     }
+  }
+
+  void _resetField() {
+    setState(() {
+      _nameController.clear();
+      _shortDescriptionController.clear();
+      _longDescriptionController.clear();
+      _purchasePriceController.clear();
+      _salePriceController.clear();
+      _discountController.clear();
+      _quantityController.clear();
+      categoryModel = null;
+      purchaseDate = null;
+      thumbnailImagePath = null;
+    });
   }
 }
