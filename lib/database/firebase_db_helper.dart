@@ -22,7 +22,7 @@ class FirebaseDbHelper {
     final wb = _db.batch();
     final productDoc = _db.collection(collectionProduct).doc();
     final purchaseDoc = _db.collection(collectionPurchase).doc();
-    final categoryDoc = _db.collection(collectionCategory).doc();
+    final categoryDoc = _db.collection(collectionCategory).doc(productModel.category.categoryId);
     productModel.productId = productDoc.id;
     purchaseModel.productId = productDoc.id;
     purchaseModel.purchaseId = purchaseDoc.id;
@@ -30,7 +30,7 @@ class FirebaseDbHelper {
     wb.set(purchaseDoc, purchaseModel.toMap());
     wb.update(categoryDoc, {
       collectionFieldProductCount:
-          productModel.category.productCount + purchaseModel.purchaseQuantity,
+          (productModel.category.productCount + purchaseModel.purchaseQuantity),
     });
 
     return wb.commit();
