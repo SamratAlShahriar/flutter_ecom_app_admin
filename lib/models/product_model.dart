@@ -8,6 +8,7 @@ const String productFieldShortDescription = 'product_short_description';
 const String productFieldLongDescription = 'product_long_description';
 const String productFieldSalePrice = 'product_sale_price';
 const String productFieldStock = 'product_stock';
+const String productFieldAvgRating = 'product_avg_rating';
 const String productFieldDiscount = 'product_discount';
 const String productFieldThumbnail = 'product_thumbnail';
 const String productFieldImages = 'product_images';
@@ -22,25 +23,26 @@ class ProductModel {
   String? longDescription;
   num salePrice;
   num stock;
+  num avgRating;
   num productDiscount;
   String thumbnailImageUrl;
   List<String>? additionalImages;
   bool available;
   bool featured;
 
-  ProductModel(
-      {this.productId,
-        required this.productName,
-        required this.category,
-        this.shortDescription,
-        this.longDescription,
-        required this.salePrice,
-        required this.stock,
-        this.productDiscount = 0,
-        required this.thumbnailImageUrl,
-        this.additionalImages,
-        this.available = true,
-        this.featured = false});
+  ProductModel({this.productId,
+    required this.productName,
+    required this.category,
+    this.shortDescription,
+    this.longDescription,
+    required this.salePrice,
+    required this.stock,
+    this.avgRating = 0.0,
+    this.productDiscount = 0,
+    required this.thumbnailImageUrl,
+    this.additionalImages,
+    this.available = true,
+    this.featured = false});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -51,6 +53,7 @@ class ProductModel {
       productFieldLongDescription: longDescription,
       productFieldSalePrice: salePrice,
       productFieldStock: stock,
+      productFieldAvgRating: avgRating,
       productFieldDiscount: productDiscount,
       productFieldThumbnail: thumbnailImageUrl,
       productFieldImages: additionalImages,
@@ -68,6 +71,7 @@ class ProductModel {
       longDescription: map[productFieldLongDescription],
       salePrice: map[productFieldSalePrice],
       stock: map[productFieldStock],
+      avgRating: map[productFieldAvgRating],
       thumbnailImageUrl: map[productFieldThumbnail],
       additionalImages: map[productFieldImages] != null
           ? map[productFieldImages] as List<String>

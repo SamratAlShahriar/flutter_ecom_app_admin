@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'address_model.dart';
 
-const String userCollection = 'Users';
+const String collectionUsers = 'Users';
 const String userFieldUserId = 'user_id';
 const String userFieldUserDisplayName = 'user_display_name';
 const String userFieldUserAddress = 'user_address';
