@@ -96,6 +96,48 @@ class _AddProductPageState extends State<AddProductPage> {
                   ),
                 ),
               ),
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Card(
+                      child: thumbnailImagePath == null
+                          ? const Icon(
+                        Icons.photo,
+                        size: 100,
+                      )
+                          : Image.file(
+                        File(thumbnailImagePath!),
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton.icon(
+                          onPressed: () {
+                            _getImage(ImageSource.camera);
+                          },
+                          icon: const Icon(Icons.camera),
+                          label: const Text('Open Camera'),
+                        ),
+                        TextButton.icon(
+                          onPressed: () {
+                            _getImage(ImageSource.gallery);
+                          },
+                          icon: const Icon(Icons.photo_album),
+                          label: const Text('Open Gallery'),
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+            ),
             Consumer<ProductProvider>(
               builder: (context, provider, child) =>
                   DropdownButtonFormField<CategoryModel>(
@@ -260,48 +302,7 @@ class _AddProductPageState extends State<AddProductPage> {
                 ),
               ),
             ),
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Card(
-                      child: thumbnailImagePath == null
-                          ? const Icon(
-                              Icons.photo,
-                              size: 100,
-                            )
-                          : Image.file(
-                              File(thumbnailImagePath!),
-                              width: 100,
-                              height: 100,
-                              fit: BoxFit.cover,
-                            ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        TextButton.icon(
-                          onPressed: () {
-                            _getImage(ImageSource.camera);
-                          },
-                          icon: const Icon(Icons.camera),
-                          label: const Text('Open Camera'),
-                        ),
-                        TextButton.icon(
-                          onPressed: () {
-                            _getImage(ImageSource.gallery);
-                          },
-                          icon: const Icon(Icons.photo_album),
-                          label: const Text('Open Gallery'),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              ),
-            ),
+
           ],
         ),
       ),
