@@ -9,6 +9,7 @@ import 'package:flutter_ecom_app_admin/models/purchase_model.dart';
 
 class ProductProvider extends ChangeNotifier {
   List<CategoryModel> categoryList = [];
+  List<ProductModel> productList = [];
 
   Future<void> addNewCategory(String category) {
     final categoryModel = CategoryModel(categoryName: category);
@@ -25,7 +26,24 @@ class ProductProvider extends ChangeNotifier {
     });
   }
 
-  Future<String> uploadImage(String thumbnailImagePath) async{
+  void getAllProducts() {
+    FirebaseDbHelper.getAllProducts().listen((snapshot) {
+      productList = List.generate(snapshot.docs.length,
+          (index) => ProductModel.fromMap(snapshot.docs[index].data()));
+      notifyListeners();
+    });
+  }
+
+
+  void getAllProductsByCategory(CategoryModel categoryModel) {
+    FirebaseDbHelper.getAllProductsByCategory(categoryModel).listen((snapshot) {
+      productList = List.generate(snapshot.docs.length,
+              (index) => ProductModel.fromMap(snapshot.docs[index].data()));
+      notifyListeners();
+    });
+  }
+
+  Future<String> uploadImage(String thumbnailImagePath) async {
     final imageRef = FirebaseStorage.instance
         .ref('Product_Images')
         .child(DateTime.now().millisecondsSinceEpoch.toString());
@@ -38,7 +56,12 @@ class ProductProvider extends ChangeNotifier {
     return snapshot.ref.getDownloadURL();
   }
 
-  Future<void> addNewProduct(ProductModel productModel, PurchaseModel purchaseModel) {
-    return FirebaseDbHelper.addNewProduct(productModel,purchaseModel);
+  Future<void> addNewProduct(
+      ProductModel productModel, PurchaseModel purchaseModel) {
+    return FirebaseDbHelper.addNewProduct(productModel, purchaseModel);
+  }
+
+  Future<void> deleteImage(String downloadUrl) {
+    return FirebaseDbHelper.deleteImage(downloadUrl);
   }
 }

@@ -17,6 +17,7 @@ class DashboardPage extends StatelessWidget {
   Widget build(BuildContext context) {
     //to populate categories
     Provider.of<ProductProvider>(context, listen: false).getAllCategories();
+    Provider.of<ProductProvider>(context, listen: false).getAllProducts();
 
     return Scaffold(
       body: Scaffold(

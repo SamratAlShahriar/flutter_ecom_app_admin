@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_ecom_app_admin/models/category_model.dart';
 import 'package:flutter_ecom_app_admin/models/product_model.dart';
 import 'package:flutter_ecom_app_admin/models/purchase_model.dart';
@@ -38,4 +39,17 @@ class FirebaseDbHelper {
 
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllCategories() =>
       _db.collection(collectionCategory).snapshots();
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllProducts() =>
+      _db.collection(collectionProduct).snapshots();
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllProductsByCategory(CategoryModel categoryModel) =>
+      _db.collection(collectionProduct)
+          .where('$productFieldCategory.$collectionFieldId', isEqualTo: categoryModel.categoryId)
+          .snapshots();
+
+
+  static Future<void> deleteImage(String downloadUrl) {
+    return FirebaseStorage.instance.refFromURL(downloadUrl).delete();
+  }
 }

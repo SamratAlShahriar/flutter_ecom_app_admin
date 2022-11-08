@@ -105,15 +105,15 @@ class _AddProductPageState extends State<AddProductPage> {
                     Card(
                       child: thumbnailImagePath == null
                           ? const Icon(
-                        Icons.photo,
-                        size: 100,
-                      )
+                              Icons.photo,
+                              size: 100,
+                            )
                           : Image.file(
-                        File(thumbnailImagePath!),
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
-                      ),
+                              File(thumbnailImagePath!),
+                              width: 100,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -302,7 +302,6 @@ class _AddProductPageState extends State<AddProductPage> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
@@ -355,11 +354,11 @@ class _AddProductPageState extends State<AddProductPage> {
       showMsg(context, 'Please select a purchase date');
     }
     if (_formKey.currentState!.validate()) {
+      String? downloadUrl;
       EasyLoading.show(status: 'Please wait');
 
       try {
-        final downloadUrl =
-            await _productProvider.uploadImage(thumbnailImagePath!);
+        downloadUrl = await _productProvider.uploadImage(thumbnailImagePath!);
 
         final productModel = ProductModel(
           productName: _nameController.text,
@@ -396,7 +395,10 @@ class _AddProductPageState extends State<AddProductPage> {
 
         _resetField();
       } catch (error) {
-        showMsg(context, 'Something went wrong');
+        if (downloadUrl != null) {
+          await _productProvider.deleteImage(downloadUrl);
+        }
+        if (mounted) showMsg(context, 'Something went wrong');
         EasyLoading.dismiss();
         print(error.toString());
       }
