@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 void showSingleTextInputDialog({
   required BuildContext context,
   required String title,
+  String? hint,
   String positiveButtonText = 'OK',
   String negativeButtonText = 'CLOSE',
   required Function(String) onSubmit,
@@ -17,7 +18,8 @@ void showSingleTextInputDialog({
         padding: EdgeInsets.all(12.0),
         child: TextField(
           controller: txtController,
-          decoration: InputDecoration(labelText: 'Enter $title'),
+          decoration:
+              InputDecoration(labelText: hint == null ? 'Enter $title' : hint),
         ),
       ),
       actions: [
@@ -25,11 +27,14 @@ void showSingleTextInputDialog({
           onPressed: () => Navigator.pop(context),
           child: Text(negativeButtonText),
         ),
-        TextButton(onPressed: () {
-          if(txtController.text.isEmpty) return;
-          onSubmit(txtController.text);
-          Navigator.pop(context);
-        }, child: Text(positiveButtonText),),
+        TextButton(
+          onPressed: () {
+            if (txtController.text.isEmpty) return;
+            onSubmit(txtController.text);
+            Navigator.pop(context);
+          },
+          child: Text(positiveButtonText),
+        ),
       ],
     ),
   );

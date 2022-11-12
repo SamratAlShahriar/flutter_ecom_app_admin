@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_ecom_app_admin/models/category_model.dart';
 import 'package:flutter_ecom_app_admin/models/date_model.dart';
+import 'package:flutter_ecom_app_admin/models/product_description_model.dart';
 import 'package:flutter_ecom_app_admin/models/product_model.dart';
 import 'package:flutter_ecom_app_admin/models/purchase_model.dart';
 import 'package:flutter_ecom_app_admin/providers/product_provider.dart';
@@ -336,8 +337,12 @@ class _AddProductPageState extends State<AddProductPage> {
   }
 
   void _getImage(ImageSource imageSource) async {
-    final pickedImage =
-        await ImagePicker().pickImage(source: imageSource, imageQuality: 70);
+    final pickedImage = await ImagePicker().pickImage(
+      source: imageSource,
+      imageQuality: 70,
+      maxWidth: 720,
+      maxHeight: 720,
+    );
     if (pickedImage != null) {
       setState(() {
         thumbnailImagePath = pickedImage.path;
@@ -365,6 +370,16 @@ class _AddProductPageState extends State<AddProductPage> {
           shortDescription: _shortDescriptionController.text.isEmpty
               ? null
               : _shortDescriptionController.text,
+          descriptions: <ProductDescriptionModel>[
+            ProductDescriptionModel(
+                descriptionTitle: 'descriptionTitle1',
+                description: 'description1',
+                descriptionViewOrder: 1),
+            ProductDescriptionModel(
+                descriptionTitle: 'descriptionTitle2',
+                description: 'description2',
+                descriptionViewOrder: 2),
+          ],
           longDescription: _longDescriptionController.text.isEmpty
               ? null
               : _longDescriptionController.text,
@@ -372,7 +387,7 @@ class _AddProductPageState extends State<AddProductPage> {
           productDiscount: num.parse(_discountController.text),
           salePrice: num.parse(_salePriceController.text),
           stock: num.parse(_quantityController.text),
-          thumbnailImageUrl: thumbnailImagePath!,
+          thumbnailImageUrl: downloadUrl,
         );
 
         final purchaseModel = PurchaseModel(

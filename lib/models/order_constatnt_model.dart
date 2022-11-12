@@ -1,4 +1,5 @@
-const String collectionOrderConstant = 'Order_Constant';
+const String collectionUtils='Utils';
+const String documentOrderConstant='OrderConstants';
 const String orderConstantFieldDiscount = 'oc_discount';
 const String orderConstantFieldVat = 'oc_vat';
 const String orderConstantFieldDeliveryCharge = 'oc_delivery_charge';

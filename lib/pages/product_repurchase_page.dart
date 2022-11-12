@@ -1,11 +1,171 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-class ProductRepurchasePage extends StatelessWidget {
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:flutter_ecom_app_admin/models/product_model.dart';
+import 'package:flutter_ecom_app_admin/providers/product_provider.dart';
+import 'package:provider/provider.dart';
+
+import '../models/date_model.dart';
+import '../models/purchase_model.dart';
+import '../utils/helper_functions.dart';
+
+class ProductRepurchasePage extends StatefulWidget {
   static const String routeName = '/product_repurchase_page';
 
   const ProductRepurchasePage({Key? key}) : super(key: key);
 
   @override
+  State<ProductRepurchasePage> createState() => _ProductRepurchasePageState();
+}
+
+class _ProductRepurchasePageState extends State<ProductRepurchasePage> {
+  final _purchasePriceController = TextEditingController();
+  final _quantityController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  DateTime? purchaseDate;
+  late ProductModel productModel;
+
+  @override
+  void didChangeDependencies() {
+    // TODO: implement didChangeDependencies
+    productModel = ModalRoute.of(context)!.settings.arguments as ProductModel;
+    super.didChangeDependencies();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Re-purchase'),
+      ),
+      body: Center(
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 24.0),
+            children: [
+              Text(
+                productModel.productName,
+                style: Theme.of(context).textTheme.headline5,
+              ),
+              const Divider(
+                height: 10,
+                thickness: 1,
+                color: Colors.grey,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _purchasePriceController,
+                  decoration: const InputDecoration(
+                    filled: true,
+                    labelText: 'Enter Purchase Price',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'This field must not be empty';
+                    }
+                    if (num.parse(value) <= 0) {
+                      return 'Price should be greater than 0';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  controller: _quantityController,
+                  decoration: const InputDecoration(
+                    filled: true,
+                    labelText: 'Enter Quantity',
+                  ),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'This field must not be empty';
+                    }
+                    if (num.parse(value) <= 0) {
+                      return 'Quantity should be greater than 0';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              Card(
+                child: Padding(
+                  padding: const EdgeInsets.all(8),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton.icon(
+                        onPressed: _selectDate,
+                        icon: const Icon(Icons.calendar_month),
+                        label: const Text('Select Purchase Date'),
+                      ),
+                      Text(purchaseDate == null
+                          ? 'No date chosen'
+                          : getFormattedDate(purchaseDate!)),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(
+                height: 16.0,
+              ),
+              ElevatedButton(
+                  onPressed: _repurchase, child: Text('Re-purchase')),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _selectDate() async {
+    final date = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime(DateTime.now().year - 1),
+        lastDate: DateTime.now());
+    if (date != null) {
+      setState(() {
+        purchaseDate = date;
+      });
+    }
+  }
+
+  void _repurchase() {
+    if (purchaseDate == null) {
+      showMsg(context, 'Please select a purchase date');
+      return;
+    }
+
+    if (_formKey.currentState!.validate()) {
+      EasyLoading.show(status: 'Saving...');
+      final purchaseModel = PurchaseModel(
+        productId: productModel.productId,
+        purchaseQuantity: num.parse(_quantityController.text),
+        purchasePrice: num.parse(_purchasePriceController.text),
+        dateModel: DateModel(
+          timestamp: Timestamp.fromDate(purchaseDate!),
+          day: purchaseDate!.day,
+          month: purchaseDate!.month,
+          year: purchaseDate!.year,
+        ),
+      );
+
+      Provider.of<ProductProvider>(context, listen: false)
+          .repurchase(purchaseModel, productModel)
+          .then((value) {
+        EasyLoading.dismiss();
+        Navigator.pop(context);
+      }).catchError((error) {
+        EasyLoading.dismiss();
+        showMsg(context, 'Failed to save...');
+      });
+    }
   }
 }

@@ -10,6 +10,7 @@ import 'package:flutter_ecom_app_admin/models/purchase_model.dart';
 class ProductProvider extends ChangeNotifier {
   List<CategoryModel> categoryList = [];
   List<ProductModel> productList = [];
+  List<PurchaseModel> purchaseListByProductId = [];
 
   Future<void> addNewCategory(String category) {
     final categoryModel = CategoryModel(categoryName: category);
@@ -34,13 +35,26 @@ class ProductProvider extends ChangeNotifier {
     });
   }
 
-
   void getAllProductsByCategory(CategoryModel categoryModel) {
     FirebaseDbHelper.getAllProductsByCategory(categoryModel).listen((snapshot) {
       productList = List.generate(snapshot.docs.length,
-              (index) => ProductModel.fromMap(snapshot.docs[index].data()));
+          (index) => ProductModel.fromMap(snapshot.docs[index].data()));
       notifyListeners();
     });
+  }
+
+  Future<void> getAllPurchaseByPurchaseId(String productId) async {
+    await FirebaseDbHelper.getAllPurchaseByPurchaseId(productId)
+        .then((snapshot) {
+      purchaseListByProductId = List.generate(snapshot.docs.length,
+          (index) => PurchaseModel.fromMap(snapshot.docs[index].data()));
+    });
+    notifyListeners();
+  }
+
+  Future<void> updateProductField(
+      String productId, String field, dynamic value) {
+    return FirebaseDbHelper.updateProductField(productId, {field: value});
   }
 
   Future<String> uploadImage(String thumbnailImagePath) async {
@@ -63,5 +77,10 @@ class ProductProvider extends ChangeNotifier {
 
   Future<void> deleteImage(String downloadUrl) {
     return FirebaseDbHelper.deleteImage(downloadUrl);
+  }
+
+  Future<void> repurchase(
+      PurchaseModel purchaseModel, ProductModel productModel) {
+    return FirebaseDbHelper.repurchase(purchaseModel, productModel);
   }
 }

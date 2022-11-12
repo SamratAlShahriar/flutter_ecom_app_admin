@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_ecom_app_admin/database/auth/auth_service.dart';
 import 'package:flutter_ecom_app_admin/pages/launcher_page.dart';
+import 'package:flutter_ecom_app_admin/providers/order_provider.dart';
 import 'package:flutter_ecom_app_admin/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -13,17 +14,20 @@ class DashboardPage extends StatelessWidget {
 
   const DashboardPage({Key? key}) : super(key: key);
 
+
+
   @override
   Widget build(BuildContext context) {
     //to populate categories
     Provider.of<ProductProvider>(context, listen: false).getAllCategories();
     Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+    Provider.of<OrderProvider>(context, listen: false).getOrderConstants();
 
     return Scaffold(
       body: Scaffold(
           body: GridView.builder(
         gridDelegate:
-            SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
+            const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2),
         itemCount: dashboardModelList.length,
         itemBuilder: (context, index) {
           return DashboardItem(

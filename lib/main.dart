@@ -14,6 +14,7 @@ import 'package:flutter_ecom_app_admin/pages/report_page.dart';
 import 'package:flutter_ecom_app_admin/pages/settings_page.dart';
 import 'package:flutter_ecom_app_admin/pages/user_list_page.dart';
 import 'package:flutter_ecom_app_admin/pages/view_product_page.dart';
+import 'package:flutter_ecom_app_admin/providers/order_provider.dart';
 import 'package:flutter_ecom_app_admin/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,9 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   runApp(MultiProvider(providers: [
+    ChangeNotifierProvider(
+      create: (context) => OrderProvider(),
+    ),
     ChangeNotifierProvider(
       create: (context) => ProductProvider(),
     ),
