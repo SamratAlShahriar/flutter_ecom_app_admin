@@ -74,7 +74,7 @@ class _AddProductPageState extends State<AddProductPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add Product'),
+        title: const Text('Add Product'),
         actions: [
           IconButton(
             onPressed: _saveProduct,
@@ -85,7 +85,7 @@ class _AddProductPageState extends State<AddProductPage> {
       body: Form(
         key: _formKey,
         child: ListView(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           children: [
             if (!_isConnected)
               const ListTile(
@@ -415,7 +415,6 @@ class _AddProductPageState extends State<AddProductPage> {
         }
         if (mounted) showMsg(context, 'Something went wrong');
         EasyLoading.dismiss();
-        print(error.toString());
       }
     }
   }

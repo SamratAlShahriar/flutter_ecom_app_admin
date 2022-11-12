@@ -6,7 +6,6 @@ import 'package:flutter_ecom_app_admin/providers/product_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../custom_widgets/dashboard_item.dart';
-import '../database/firebase_db_helper.dart';
 import '../models/dashboard_model.dart';
 
 class DashboardPage extends StatelessWidget {
@@ -43,7 +42,7 @@ class DashboardPage extends StatelessWidget {
                     Navigator.pushReplacementNamed(
                         context, LauncherPage.routeName));
               },
-              icon: Icon(Icons.logout))
+              icon: const Icon(Icons.logout))
         ],
       ),
     );

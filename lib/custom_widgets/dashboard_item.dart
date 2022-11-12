@@ -20,7 +20,7 @@ class DashboardItem extends StatelessWidget {
             children: [
               Icon(model.iconData,
                   size: 50, color: Theme.of(context).primaryColor),
-              SizedBox(
+              const SizedBox(
                 height: 10,
               ),
               Text(

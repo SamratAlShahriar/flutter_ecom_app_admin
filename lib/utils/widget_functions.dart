@@ -15,11 +15,10 @@ void showSingleTextInputDialog({
     builder: (ctx) => AlertDialog(
       title: Text(title),
       content: Padding(
-        padding: EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(12.0),
         child: TextField(
           controller: txtController,
-          decoration:
-              InputDecoration(labelText: hint == null ? 'Enter $title' : hint),
+          decoration: InputDecoration(labelText: hint ?? 'Enter $title'),
         ),
       ),
       actions: [

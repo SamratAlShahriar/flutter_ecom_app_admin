@@ -12,5 +12,9 @@ class AuthService {
     return FirebaseDbHelper.isAdmin(credential.user!.uid);
   }
 
+  static Future<void> resetPassword(String email) async{
+    return await _auth.sendPasswordResetEmail(email: email);
+  }
+
   static Future<void> logout() async => await _auth.signOut();
 }

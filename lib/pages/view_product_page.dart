@@ -97,7 +97,7 @@ class _ViewProductPageState extends State<ViewProductPage> {
                           imageUrl: product.thumbnailImageUrl,
                           width: 60,
                           placeholder: (context, url) =>
-                          Center(child: const CircularProgressIndicator()),
+                          const Center(child: CircularProgressIndicator()),
                           errorWidget: (context, url, error) =>
                           const Icon(Icons.error),
                         ),

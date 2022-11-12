@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AdditionalImageViewItem extends StatelessWidget {
-  Widget child;
-  AdditionalImageViewItem({Key? key, required this.child}) : super(key: key);
+  final Widget child;
+  const AdditionalImageViewItem({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

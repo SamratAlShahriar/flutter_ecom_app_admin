@@ -70,7 +70,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         },
                         child: CachedNetworkImage(
                           fit: BoxFit.contain,
-                          imageUrl: productModel.additionalImages![index],
+                          imageUrl: productModel.additionalImages[index],
                           placeholder: (context, url) => const Center(
                             child: Center(child: CircularProgressIndicator()),
                           ),
@@ -104,8 +104,8 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                         context, ProductRepurchasePage.routeName,
                         arguments: productModel);
                   },
-                  child: Text('Re-purchase')),
-              SizedBox(
+                  child: const Text('Re-purchase')),
+              const SizedBox(
                 width: 16,
               ),
               OutlinedButton(
@@ -141,7 +141,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                       });
                     });
               },
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
             ),
           ),
           SwitchListTile(
@@ -153,7 +153,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               productProvider.updateProductField(
                   productModel.productId!, productFieldAvailable, value);
             },
-            title: Text('Available'),
+            title: const Text('Available'),
           ),
           SwitchListTile(
             value: productModel.featured,
@@ -164,7 +164,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
               productProvider.updateProductField(
                   productModel.productId!, productFieldFeatured, value);
             },
-            title: Text('Featured'),
+            title: const Text('Featured'),
           ),
           if (productModel.descriptions != null)
             Padding(

@@ -21,12 +21,12 @@ class CategoryPage extends StatelessWidget {
                     .addNewCategory(value);
               });
         },
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
       ),
       body: Consumer<ProductProvider>(
         builder: (context, provider, child) {
           return provider.categoryList.isEmpty
-              ? Center(
+              ? const Center(
                   child: Text('No Categories Found!'),
                 )
               : ListView.builder(

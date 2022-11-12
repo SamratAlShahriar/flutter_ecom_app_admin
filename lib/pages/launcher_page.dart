@@ -19,6 +19,6 @@ class LauncherPage extends StatelessWidget {
       }
     });
 
-    return Scaffold(body: Center(child: CircularProgressIndicator()));
+    return const Scaffold(body: Center(child: CircularProgressIndicator()));
   }
 }

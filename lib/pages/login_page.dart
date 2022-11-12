@@ -2,7 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_ecom_app_admin/database/auth/auth_service.dart';
+import 'package:flutter_ecom_app_admin/database/firebase_db_helper.dart';
 import 'package:flutter_ecom_app_admin/pages/launcher_page.dart';
+import 'package:flutter_ecom_app_admin/utils/helper_functions.dart';
+
+import '../utils/widget_functions.dart';
 
 class LoginPage extends StatefulWidget {
   static const String routeName = '/login_page';
@@ -35,11 +39,11 @@ class _LoginPageState extends State<LoginPage> {
         child: Form(
           key: _formKey,
           child: ListView(
-            padding: EdgeInsets.all(24.0),
+            padding: const EdgeInsets.all(24.0),
             shrinkWrap: true,
             children: [
               Padding(
-                padding: EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(4.0),
                 child: TextFormField(
                   controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
@@ -56,13 +60,13 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.all(4.0),
+                padding: const EdgeInsets.all(4.0),
                 child: TextFormField(
                   controller: _passController,
                   keyboardType: TextInputType.text,
                   decoration: InputDecoration(
                       filled: true,
-                      prefixIcon: Icon(Icons.lock_open),
+                      prefixIcon: const Icon(Icons.lock_open),
                       suffixIcon: IconButton(
                           onPressed: _toggle,
                           icon: Icon(_obscureTxt
@@ -78,15 +82,31 @@ class _LoginPageState extends State<LoginPage> {
                   },
                 ),
               ),
+              const SizedBox(
+                height: 16,
+              ),
               ElevatedButton(
                 onPressed: _authenticate,
-                child: Text('Login as ADMIN'),
+                child: const Text('Login as ADMIN'),
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  const Text('Need Help? '),
+                  TextButton(
+                    onPressed: _resetPassword,
+                    child: const Text('Reset Password'),
+                  ),
+                ],
               ),
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
                   _errMsg,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18.0,
                     color: Colors.red,
                   ),
@@ -105,7 +125,7 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-  void _authenticate() async{
+  void _authenticate() async {
     if (_formKey.currentState!.validate()) {
       EasyLoading.show(status: 'Please wait...', dismissOnTap: false);
       final email = _emailController.text;
@@ -114,8 +134,8 @@ class _LoginPageState extends State<LoginPage> {
       try {
         final status = await AuthService.login(email, pass);
         EasyLoading.dismiss();
-        if(status){
-          if(mounted){
+        if (status) {
+          if (mounted) {
             Navigator.pushReplacementNamed(context, LauncherPage.routeName);
           }
         } else {
@@ -131,5 +151,25 @@ class _LoginPageState extends State<LoginPage> {
         });
       }
     }
+  }
+
+  void _resetPassword() {
+    showSingleTextInputDialog(
+        context: context,
+        title: 'Reset Password',
+        hint: 'Enter email',
+        onSubmit: (email) {
+          if (email.isNotEmpty && email.contains('@')) {
+            AuthService.resetPassword(email)
+                .then((value) {
+                  showMsg(context, 'Password reset link sent to $email');
+            })
+                .catchError((error) {
+              _errMsg = error.toString();
+            });
+          }
+        },
+        negativeButtonText: 'cancel',
+        positiveButtonText: 'Send');
   }
 }

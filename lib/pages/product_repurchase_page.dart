@@ -116,7 +116,7 @@ class _ProductRepurchasePageState extends State<ProductRepurchasePage> {
                 height: 16.0,
               ),
               ElevatedButton(
-                  onPressed: _repurchase, child: Text('Re-purchase')),
+                  onPressed: _repurchase, child: const Text('Re-purchase')),
             ],
           ),
         ),
