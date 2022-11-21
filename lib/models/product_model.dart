@@ -1,6 +1,7 @@
 import 'package:flutter_ecom_app_admin/models/category_model.dart';
 import 'package:flutter_ecom_app_admin/models/product_description_model.dart';
 
+
 const String collectionProduct = 'Products';
 const String productFieldId = 'product_id';
 const String productFieldName = 'product_name';
@@ -14,6 +15,7 @@ const String productFieldAvgRating = 'product_avg_rating';
 const String productFieldDiscount = 'product_discount';
 const String productFieldThumbnail = 'product_thumbnail';
 const String productFieldImages = 'product_images';
+const String productFieldTags = 'product_tags';
 const String productFieldAvailable = 'product_available';
 const String productFieldFeatured = 'product_featured';
 
@@ -30,24 +32,26 @@ class ProductModel {
   num productDiscount;
   String thumbnailImageUrl;
   List<String> additionalImages;
+  List<String> tags;
   bool available;
   bool featured;
 
   ProductModel(
       {this.productId,
-      required this.productName,
-      required this.category,
-      this.descriptions,
-      this.shortDescription,
-      this.longDescription,
-      required this.salePrice,
-      required this.stock,
-      this.avgRating = 0.0,
-      this.productDiscount = 0,
-      required this.thumbnailImageUrl,
-      this.additionalImages = const <String>[],
-      this.available = true,
-      this.featured = false});
+        required this.productName,
+        required this.category,
+        this.descriptions,
+        this.shortDescription,
+        this.longDescription,
+        required this.salePrice,
+        required this.stock,
+        this.avgRating = 0.0,
+        this.productDiscount = 0,
+        required this.thumbnailImageUrl,
+        this.additionalImages = const <String>[],
+        this.tags = const <String>[],
+        this.available = true,
+        this.featured = false});
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
@@ -63,6 +67,7 @@ class ProductModel {
       productFieldDiscount: productDiscount,
       productFieldThumbnail: thumbnailImageUrl,
       productFieldImages: additionalImages,
+      productFieldTags: tags,
       productFieldAvailable: available,
       productFieldFeatured: featured,
     };
@@ -72,19 +77,23 @@ class ProductModel {
     return ProductModel(
       productId: map[productFieldId],
       productName: map[productFieldName],
+
       category: CategoryModel.fromMap(map[productFieldCategory]),
       descriptions: map[productFieldDescription] == null
           ? null
           : (map[productFieldDescription] as List)
-              .map((e) => ProductDescriptionModel.fromMap(e))
-              .toList(),
+          .map((e) => ProductDescriptionModel.fromMap(e))
+          .toList(),
       shortDescription: map[productFieldShortDescription],
       longDescription: map[productFieldLongDescription],
       salePrice: map[productFieldSalePrice],
       stock: map[productFieldStock],
       avgRating: map[productFieldAvgRating],
+      productDiscount: map[productFieldDiscount],
       thumbnailImageUrl: map[productFieldThumbnail],
-      additionalImages: (map[productFieldImages] as List).map((e) => e.toString()).toList(),
+      additionalImages:
+      (map[productFieldImages] as List).map((e) => e.toString()).toList(),
+      tags: (map[productFieldTags] as List).map((e) => e.toString()).toList(),
       available: map[productFieldAvailable],
       featured: map[productFieldFeatured],
     );
